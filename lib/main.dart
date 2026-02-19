@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'splash_screen.dart';
+import 'recipe_details_screen.dart';
+
 void main() {
   runApp(const CookWhatApp());
 }
@@ -171,9 +173,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    recipeCard("Pasta Alfredo", "assets/images/food1.jpeg"),
-                    recipeCard("Chicken Curry", "assets/images/food2.jpeg"),
-                    recipeCard("Veggie Salad", "assets/images/food3.jpeg"),
+                    recipeCard("Fruit Salad", "assets/images/food1.jpg"),
+                    recipeCard("Orange Sweet", "assets/images/food2.jpg"),
+                    recipeCard("Fish Fry", "assets/images/food3.jpg"),
                   ],
                 ),
               ),
@@ -185,47 +187,64 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
   Widget recipeCard(String title, String imagePath) {
-    return Container(
-      width: 160,
-      margin: const EdgeInsets.only(right: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(20)),
-            child: Image.asset(
-              imagePath,
-              height: 120,
-              width: double.infinity,
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RecipeDetailsScreen(
+              title: title,
+              imagePath: imagePath,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+        );
+      },
+      child: Container(
+        width: 160,
+        margin: const EdgeInsets.only(right: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius:
+              const BorderRadius.vertical(top: Radius.circular(20)),
+              child: Hero(
+                tag: imagePath,
+                child: Image.asset(
+                  imagePath,
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
 
 }
 
